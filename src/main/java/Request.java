@@ -17,7 +17,7 @@ public class Request {
     private final String query;
     private final List<String> headers;
     private final String body;
-    private List<NameValuePair> queryParam = null;
+    private List<NameValuePair> queryParam;
 
     public Request(String method, String URL, String path, String query, List<String> headers, String body) {
         this.method = method;
@@ -54,7 +54,7 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Request{" + "Метод ='" + method + '\'' + "параметры ='" + queryParam + '\'' + ", путь ='" + path + '\'' + ", заголовки ='" + headers + '\'' + ", тело запроса ='" + body + '\'' + '}';
+        return "Request{" + "Метод = '" + getMethod() + '\'' + " , параметры: "+ getQuery()+ '\'' + '\'' + ", путь ='" + getPath() + '\'' + ", заголовки ='" + getHeaders() + '\'' + ", тело запроса ='" + getBody() + '\'' + '}';
     }
 
     public List<NameValuePair> getQueryParams() {
@@ -67,8 +67,12 @@ public class Request {
         return queryParam;
     }
 
-    public List<NameValuePair> getQueryParam(String name) throws URISyntaxException {
-        queryParam = URLEncodedUtils.parse(new URI(URL), String.valueOf(StandardCharsets.UTF_8));
+    public List<NameValuePair> getQueryParam(String name) {
+        try {
+            queryParam = URLEncodedUtils.parse(new URI(URL), String.valueOf(StandardCharsets.UTF_8));
+        } catch (URISyntaxException e) {
+            System.out.println("Не получилось");;
+        }
         if (!queryParam.isEmpty()) {
             for (NameValuePair nvp : queryParam) {
                 if (nvp.getName().equals(name)) {

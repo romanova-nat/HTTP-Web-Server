@@ -39,7 +39,7 @@ public class Server {
 
         ExecutorService executorService = Executors.newFixedThreadPool(countOfThreads);
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            while (true) {
+            while (!serverSocket.isClosed()) {
                 var socket = serverSocket.accept();
                 executorService.execute(() -> handelConnection(socket));
             }
@@ -62,10 +62,10 @@ public class Server {
 
             if (!request.getPath().startsWith("/favicon")) {
                 final var path = request.getPath();
-                final var filePath = Path.of(".", "public", path);
+                final var filePath = Path.of(".", "static", path);
                 final var mimeType = Files.probeContentType(filePath);
 
-                if (path.equals("/classic.html")) {
+                if (path.equals("/default-get.html")) {
                     final var template = Files.readString(filePath);
                     final var content = template.replace(
                             "{time}",

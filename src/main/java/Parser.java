@@ -42,11 +42,12 @@ public class Parser {
 
         // определяем путь
         final var pathWhithQuery = requestLine[1];
-        if (!pathWhithQuery.startsWith("/")) {
+        if (!pathWhithQuery.startsWith("/") && pathWhithQuery.startsWith("/favicon")) {
             badRequest(out);
             return null;
         }
-        //       System.out.println(pathWhithQuery);
+               System.out.println("Параметры: " + pathWhithQuery);
+
 
         // ищем заголовки
         final var headersDelimiter = new byte[]{'\r', '\n', '\r', '\n'};
@@ -79,20 +80,19 @@ public class Parser {
                 System.out.println(body);
             }
         }
-
-
+        
         if (method.equals(GET)) {
             var pathAndQuery = pathWhithQuery.split("\\?");
             if (pathAndQuery.length == 2) {
                 var path = pathAndQuery[0];
-                var query = "?" + pathAndQuery[1];
+               var query = "?" + pathAndQuery[1];
                 var URL = startURL + path + query;
-                System.out.println(new Request(method, URL, path, query, headers, null));
+//                System.out.println(new Request(method, URL, path, query, headers, null));
                 return new Request(method, URL, path, query, headers, null);
             } else if (pathAndQuery.length == 1) {
                 var path = pathAndQuery[0];
                 var URL = startURL + path;
-                System.out.println(new Request(method, URL, path, null, headers, null));
+//                System.out.println(new Request(method, URL, path, null, headers, null));
                 return new Request(method, URL, path, null, headers, null);
             }
         }
