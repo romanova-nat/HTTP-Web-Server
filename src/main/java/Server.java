@@ -81,17 +81,7 @@ public class Server {
                     out.write(content);
                     out.flush();
                 } else {
-                    final var length = Files.size(filePath);
-                    out.write((
-                            "HTTP/1.1 200 OK\r\n" +
-                                    "Content-Type: " + mimeType + "\r\n" +
-                                    "Content-Length: " + length + "\r\n" +
-                                    "Connection: close\r\n" +
-                                    "\r\n"
-                    ).getBytes());
-                    Files.copy(filePath, out);
-                    out.flush();
-
+                    parser.badRequest(out);
                 }
 
                 if (!request.getMethod().equals("GET")) {

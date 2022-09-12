@@ -80,7 +80,7 @@ public class Parser {
                 System.out.println(body);
             }
         }
-        
+
         if (method.equals(GET)) {
             var pathAndQuery = pathWhithQuery.split("\\?");
             if (pathAndQuery.length == 2) {
@@ -108,7 +108,7 @@ public class Parser {
                 .findFirst();
     }
 
-    private void badRequest(BufferedOutputStream out) throws IOException {
+    public void badRequest(BufferedOutputStream out) throws IOException {
         out.write((
                 "HTTP/1.1 400 Bad Request\r\n" +
                         "Content-Length: 0\r\n" +
