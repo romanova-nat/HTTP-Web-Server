@@ -46,7 +46,7 @@ public class Parser {
             badRequest(out);
             return null;
         }
-               System.out.println("Параметры: " + pathWhithQuery);
+//              System.out.println("Параметры: " + pathWhithQuery);
 
 
         // ищем заголовки
@@ -85,14 +85,14 @@ public class Parser {
             var pathAndQuery = pathWhithQuery.split("\\?");
             if (pathAndQuery.length == 2) {
                 var path = pathAndQuery[0];
-               var query = "?" + pathAndQuery[1];
+                var query = "?" + pathAndQuery[1];
                 var URL = startURL + path + query;
-//                System.out.println(new Request(method, URL, path, query, headers, null));
+                System.out.println(new Request(method, URL, path, query, headers, null));
                 return new Request(method, URL, path, query, headers, null);
             } else if (pathAndQuery.length == 1) {
                 var path = pathAndQuery[0];
                 var URL = startURL + path;
-//                System.out.println(new Request(method, URL, path, null, headers, null));
+                //              System.out.println(new Request(method, URL, path, null, headers, null));
                 return new Request(method, URL, path, null, headers, null);
             }
         }
@@ -118,8 +118,6 @@ public class Parser {
         out.flush();
     }
 
-
-    // from google guava with modifications
     private static int indexOf(byte[] array, byte[] target, int start, int max) {
         outer:
         for (int i = start; i < max - target.length + 1; i++) {
